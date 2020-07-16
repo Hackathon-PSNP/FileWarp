@@ -2,6 +2,7 @@
   package="com.filewarp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <uses-permission
                 android:required="true"
                 android:name="android.permission.ACCESS_FINE_LOCATION"/>
@@ -11,8 +12,13 @@
     <uses-permission
             android:required="true"
             android:name="android.permission.CHANGE_WIFI_STATE"/>    
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/> 
+    
+    <uses-feature
+        android:name="android.hardware.wifi.direct"
+        android:required="true" />
 
     <application
       android:name=".MainApplication"

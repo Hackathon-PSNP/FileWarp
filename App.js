@@ -79,7 +79,7 @@ export default class App extends Component {
           this.logAndDisplay('startDiscoveringPeers status: ', status);
       } catch (e) {
           this.logAndDisplay('In componentDidMount() Error:', e);
-          // console.error(e);
+            // console.error(e);
       }
   }
 
@@ -93,9 +93,10 @@ export default class App extends Component {
     this.logAndDisplay('OnConnectionInfoUpdated', info);
   };
 
-  handleNewPeers = ({ devices }) => {
-    this.logAndDisplay('OnPeersUpdated', devices);
-    // this.setState({ devices: devices });
+  handleNewPeers = (deviceList) => {
+    this.logAndDisplay('OnPeersUpdated: ', deviceList);
+    this.setState({ devices: deviceList.devices });
+    this.logAndDisplay('Device List: ', this.state.devices);
   };
 
   handleThisDeviceChanged = (groupInfo) => {
@@ -106,7 +107,7 @@ export default class App extends Component {
       this.logAndDisplay('Connect to: ', this.state.devices[0]);
       connect(this.state.devices[0].deviceAddress)
           .then(() => this.logAndDisplay('Successfully connected', {}))
-          .catch(err => console.error('Something gone wrong. Details: ', err));
+          .catch(err => this.logAndDisplay('Something gone wrong. Details: ', err));
   };
 
   onCancelConnect = () => {
@@ -141,7 +142,11 @@ export default class App extends Component {
 
   onGetAvailableDevices = () => {
       getAvailablePeers()
-          .then(peers => this.logAndDisplay(peers));
+          .then(peers => {
+            this.logAndDisplay("Get Available Devices: ", peers.devices);
+            this.setState({devices: peers.devices});
+            this.logAndDisplay("Device List: ", this.state.devices);
+          });
   };
 
   onSendFile = () => {
@@ -241,7 +246,7 @@ export default class App extends Component {
     {title: "Investigate",            functionCall: this.onStartInvestigate},
     {title: "Prevent Investigation",  functionCall: this.onStopInvestigation},
     {title: "Get Available Devices",  functionCall: this.onGetAvailableDevices},
-    {title: "Get connection Info",    functionCall: this.onGetAvailableDevices},
+    {title: "Get connection Info",    functionCall: this.onGetConnectionInfo},
     {title: "Get group info",         functionCall: this.onGetGroupInfo},
     {title: "Send file",              functionCall: this.onSendFile},
     {title: "Receive file",           functionCall: this.onReceiveFile},
